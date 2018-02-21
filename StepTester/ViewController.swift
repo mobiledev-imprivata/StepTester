@@ -29,18 +29,6 @@ class ViewController: UIViewController {
         
         testRunner.speaker = Speaker()
         testRunner.delegate = self
-        
-//        DispatchQueue.main.asyncAfter(deadline: .now() + 4) {
-//            self.testRunner.stop()
-//        }
-//
-//        DispatchQueue.main.asyncAfter(deadline: .now() + 6) {
-//            self.speaker.speak("Walk")
-//        }
-//
-//        DispatchQueue.main.asyncAfter(deadline: .now() + 12) {
-//            self.speaker.speak("Done")
-//        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -69,7 +57,7 @@ extension ViewController: UIPickerViewDataSource {
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return 5
+        return testRunner.locations.count
     }
     
 }
@@ -77,28 +65,36 @@ extension ViewController: UIPickerViewDataSource {
 extension ViewController: UIPickerViewDelegate {
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        let numberFormatter = NumberFormatter()
-        numberFormatter.numberStyle = .spellOut
-        return numberFormatter.string(for: row + 1)?.capitalized
+//        let numberFormatter = NumberFormatter()
+//        numberFormatter.numberStyle = .spellOut
+//        return numberFormatter.string(for: row + 1)?.capitalized
+        
+        return testRunner.locations[row].capitalized
     }
     
 }
 
 extension ViewController: TestRunnerDelegate {
+    
     func didStart() {
-        print("didStart")
+        Logger.sharedInstance.log("didStart")
         currentRoundLabel.text = "0"
     }
     
-    func didEnd() {
-        print("didEnd")
+    func didFinish() {
+        Logger.sharedInstance.log("didFinish")
         currentRoundLabel.text = "0"
     }
     
     func updateRound(_ round: Int) {
-        print("updateRound \(round)")
+        Logger.sharedInstance.log("updateRound \(round)")
         currentRoundLabel.text = "\(round)"
     }
+    
+    func selectedLocation() -> Int {
+        return pickerView.selectedRow(inComponent: 0)
+    }
+
     
 }
 

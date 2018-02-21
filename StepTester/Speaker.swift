@@ -9,9 +9,21 @@
 import Foundation
 import AVFoundation
 
-struct Speaker {
+
+protocol SpeakerDelegate {
+    func didFinish(text: String)
+}
+
+final class Speaker: NSObject {
     
     private let synthesizer = AVSpeechSynthesizer()
+    
+    var delegate: SpeakerDelegate?
+    
+    override init() {
+        super.init()
+        synthesizer.delegate = self
+    }
 
      func speak(_ message: String) {
         Logger.sharedInstance.log(message)
@@ -21,4 +33,12 @@ struct Speaker {
         synthesizer.speak(utterance)
     }
 
+}
+
+extension Speaker: AVSpeechSynthesizerDelegate {
+    
+    func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didFinish utterance: AVSpeechUtterance) {
+        delegate?.didFinish(text: utterance.speechString)
+    }
+    
 }

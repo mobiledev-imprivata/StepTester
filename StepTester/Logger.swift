@@ -35,13 +35,15 @@ public final class Logger {
         deleteFile()
     }
     
-    func log(_ message: String) {
+    func log(_ message: String, toFile: Bool = false) {
         loggerQueue.async { [unowned self] in
             let timestamp = self.dateFormatter.string(from: Date())
-            let logString = "[\(timestamp)] \(message)"
+            let logString = timestamp + " " + (toFile ? "*** " : "") + message
             print(logString)
             
-            self.messageBuffer.append(logString)
+            if !toFile { return }
+            
+            self.messageBuffer.append(message)
             print("messageBuffer \(self.messageBuffer.count)")
             if self.messageBuffer.count >= self.messageBufferMaxSize {
                 self.writeBufferToFile()
@@ -52,15 +54,10 @@ public final class Logger {
     func upload() {
         print(#function)
         loggerQueue.async { [unowned self] in
-            guard self.logFilePath != nil else { return }
-            
             // flush any remaining messages in the message buffer, then close the file
             self.writeBufferToFile()
             self.closeFile()
-            
             self.uploadFileToServer()
-            self.deleteFile()
-            self.messageBuffer.removeAll(keepingCapacity: true)
         }
     }
     
@@ -80,12 +77,9 @@ public final class Logger {
         let pathArray = NSSearchPathForDirectoriesInDomains(.cachesDirectory, .userDomainMask, true)
         if !pathArray.isEmpty {
             let path = pathArray[0]
-            let dt = DateFormatter()
-            dt.dateFormat = "yyyyMMdd'T'HH-mm-ss"
-            let dateString = dt.string(from: Date())
-            logFilePath = "\(path)/StepTester-\(dateString).log"
+            logFilePath = "\(path)/logfile"
             print("opening logFilePath \(logFilePath!)")
-            outputStream = OutputStream(toFileAtPath: logFilePath!, append: false)
+            outputStream = OutputStream(toFileAtPath: logFilePath!, append: true)
             outputStream?.open()
         }
     }
@@ -93,6 +87,7 @@ public final class Logger {
     private func closeFile() {
         print(#function)
         outputStream?.close()
+        outputStream = nil
     }
     
     private func deleteFile() {
@@ -179,6 +174,10 @@ public final class Logger {
                 }
                 
                 print("response status code \(response.statusCode)")
+                if response.statusCode == 200 {
+                    self.deleteFile()
+                    self.messageBuffer.removeAll(keepingCapacity: true)
+                }
             }
             task.resume()
         }
