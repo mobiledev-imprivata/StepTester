@@ -25,9 +25,9 @@ final class TestRunner {
     ]
     
     let nSteps = 7
-    let nRounds = 2
-    let testDuration = 3
-    let pauseDuration = 2
+    let nRounds = 3
+    let testDuration: TimeInterval = 5
+    let pauseDuration: TimeInterval = 3
 
     var speaker: Speaker? {
         didSet {
@@ -41,7 +41,6 @@ final class TestRunner {
     func start() {
         delegate?.didStart()
         currentRound = 0
-        
         let selectedLocation = delegate?.selectedLocation() ?? 0
         let message: String
         if locations[selectedLocation].contains("looking") {
@@ -52,17 +51,9 @@ final class TestRunner {
         speaker?.speak(message)
     }
     
-    private func doRoundPreamble() {
-        currentRound += 1
-        delegate?.updateRound(currentRound)
-        speaker?.speak("round \(currentRound) take \(nSteps) steps")
-    }
-    
     private func startRound() {
-        speaker?.speak("go")
-        DispatchQueue.main.asyncAfter(deadline: .now() + DispatchTimeInterval.seconds(testDuration)) {
-            self.endRound()
-        }
+        currentRound += 1
+        speaker?.speak("round \(currentRound), take \(nSteps) steps", delay: pauseDuration)
     }
     
     private func endRound() {
@@ -74,15 +65,11 @@ final class TestRunner {
         Logger.sharedInstance.log(message, toFile: true)
         if currentRound < nRounds {
             speaker?.speak("stop")
-            DispatchQueue.main.asyncAfter(deadline: .now() + DispatchTimeInterval.seconds(pauseDuration)) {
-                self.doRoundPreamble()
-            }
         } else {
             speaker?.speak("done with all rounds")
             delegate?.didFinish()
         }
     }
-    
     
 }
 
@@ -90,21 +77,18 @@ extension TestRunner: SpeakerDelegate {
     
     func didFinish(text: String) {
         Logger.sharedInstance.log("didFinish saying \(text)")
-        if text.contains("phone") {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-                self.doRoundPreamble()
-            }
+        if text.contains("phone") || text.starts(with: "stop") {
+            startRound()
         } else if text.starts(with: "round") {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                self.speaker?.speak("ready")
-            }
+            delegate?.updateRound(currentRound)
+            speaker?.speak("ready", delay: 0.5)
         } else if text.starts(with: "ready") {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                self.speaker?.speak("set")
-            }
+            speaker?.speak("set", delay: 0.5)
         } else if text.starts(with: "set") {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                self.startRound()
+            speaker?.speak("go", delay: 0.5)
+        } else if text.starts(with: "go") {
+            DispatchQueue.main.asyncAfter(deadline: .now() + testDuration) {
+                self.endRound()
             }
         }
     }

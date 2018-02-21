@@ -22,14 +22,15 @@ final class Speaker: NSObject {
     
     override init() {
         super.init()
+        synthesizer.pauseSpeaking(at: .word)
         synthesizer.delegate = self
     }
 
-     func speak(_ message: String) {
+    func speak(_ message: String, delay: TimeInterval = 0.0) {
         Logger.sharedInstance.log(message)
         let utterance = AVSpeechUtterance(string: message)
+        utterance.preUtteranceDelay = delay
         // utterance.voice = AVSpeechSynthesisVoice(language: "en-AU")
-        synthesizer.pauseSpeaking(at: .word)
         synthesizer.speak(utterance)
     }
 
