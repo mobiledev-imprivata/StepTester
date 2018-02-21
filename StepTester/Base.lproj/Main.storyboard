@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13122.16" systemVersion="17A277" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13104.12"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -9,16 +15,118 @@
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="StepTester" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="spY-yV-gHC">
+                                <rect key="frame" x="27" y="20" width="320" height="216"/>
+                            </pickerView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Steps" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1KN-Ke-Icd">
+                                <rect key="frame" x="20" y="323" width="335" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="88" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JcT-dq-dHY" userLabel="Step Count Label">
+                                <rect key="frame" x="166.5" y="323.5" width="21" height="20.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Rounds" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LA8-yt-k5S">
+                                <rect key="frame" x="20" y="352" width="58" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="88" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fkL-J8-Dhw" userLabel="Rounds Count Label">
+                                <rect key="frame" x="166.5" y="352" width="21" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Current round" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="P0L-hL-MUJ">
+                                <rect key="frame" x="20" y="381" width="108" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="done" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nqR-XJ-2zu" userLabel="Current Round Label">
+                                <rect key="frame" x="148.5" y="381" width="39" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xZF-FM-fk7">
+                                <rect key="frame" x="150" y="473" width="74" height="55"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="36"/>
+                                <state key="normal" title="Start"/>
+                                <connections>
+                                    <action selector="startTest:" destination="BYZ-38-t0r" eventType="touchUpInside" id="02v-PI-Zoq"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="F8P-ud-GDR">
+                                <rect key="frame" x="20" y="606" width="68" height="41"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                <state key="normal" title="Delete"/>
+                                <connections>
+                                    <action selector="deleteData:" destination="BYZ-38-t0r" eventType="touchUpInside" id="O9I-PH-t59"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PjP-YN-9rV">
+                                <rect key="frame" x="301" y="606" width="54" height="41"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                <state key="normal" title="Send"/>
+                                <connections>
+                                    <action selector="sendData:" destination="BYZ-38-t0r" eventType="touchUpInside" id="h1M-Q5-dmE"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="nqR-XJ-2zu" firstAttribute="bottom" secondItem="P0L-hL-MUJ" secondAttribute="bottom" id="5pe-3q-Cr0"/>
+                            <constraint firstItem="1KN-Ke-Icd" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="66b-aB-w6S"/>
+                            <constraint firstItem="1KN-Ke-Icd" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="6YH-yF-Shv"/>
+                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="P0L-hL-MUJ" secondAttribute="trailing" constant="20" symbolic="YES" id="8WU-rE-mLL"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="F8P-ud-GDR" secondAttribute="bottom" constant="20" id="8Wc-xF-5w1"/>
+                            <constraint firstItem="JcT-dq-dHY" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="20" symbolic="YES" id="8ze-Zf-aPN"/>
+                            <constraint firstItem="xZF-FM-fk7" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="AjU-ul-Hjq"/>
+                            <constraint firstItem="JcT-dq-dHY" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="GDY-yS-SAP"/>
+                            <constraint firstItem="spY-yV-gHC" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Huh-Wl-Mku"/>
+                            <constraint firstItem="JcT-dq-dHY" firstAttribute="bottom" secondItem="1KN-Ke-Icd" secondAttribute="bottom" id="KMs-YC-z6R"/>
+                            <constraint firstItem="nqR-XJ-2zu" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="20" symbolic="YES" id="LIb-YC-vWS"/>
+                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="F8P-ud-GDR" secondAttribute="trailing" constant="20" symbolic="YES" id="Qa0-mE-usb"/>
+                            <constraint firstItem="P0L-hL-MUJ" firstAttribute="leading" secondItem="1KN-Ke-Icd" secondAttribute="leading" id="RT3-fb-LcZ"/>
+                            <constraint firstItem="fkL-J8-Dhw" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="ST0-eN-tNT"/>
+                            <constraint firstItem="fkL-J8-Dhw" firstAttribute="bottom" secondItem="LA8-yt-k5S" secondAttribute="bottom" id="Skh-On-KcU"/>
+                            <constraint firstItem="LA8-yt-k5S" firstAttribute="top" secondItem="1KN-Ke-Icd" secondAttribute="bottom" constant="8" id="VTE-cv-hfo"/>
+                            <constraint firstItem="1KN-Ke-Icd" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="cij-QE-QD0"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="PjP-YN-9rV" secondAttribute="trailing" constant="20" id="dTo-Zn-1lF"/>
+                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="LA8-yt-k5S" secondAttribute="trailing" constant="20" symbolic="YES" id="dUk-8I-IPk"/>
+                            <constraint firstItem="nqR-XJ-2zu" firstAttribute="trailing" secondItem="JcT-dq-dHY" secondAttribute="trailing" id="hhm-Iu-AT9"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="PjP-YN-9rV" secondAttribute="bottom" constant="20" id="hro-i5-9um"/>
+                            <constraint firstItem="PjP-YN-9rV" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="20" symbolic="YES" id="ike-8C-AAA"/>
+                            <constraint firstItem="xZF-FM-fk7" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="bottom" multiplier="0.75" id="lIC-LQ-hct"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="top" secondItem="spY-yV-gHC" secondAttribute="bottom" constant="-216" id="m3e-wn-6sP"/>
+                            <constraint firstItem="LA8-yt-k5S" firstAttribute="leading" secondItem="1KN-Ke-Icd" secondAttribute="leading" id="mVP-2B-TYn"/>
+                            <constraint firstItem="F8P-ud-GDR" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="qcc-ER-yLl"/>
+                            <constraint firstItem="fkL-J8-Dhw" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="20" symbolic="YES" id="vi2-3r-Wpy"/>
+                            <constraint firstItem="P0L-hL-MUJ" firstAttribute="top" secondItem="LA8-yt-k5S" secondAttribute="bottom" constant="8" id="yXl-kM-K7K"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
+                    <connections>
+                        <outlet property="currentRoundLabel" destination="nqR-XJ-2zu" id="01N-ub-dwH"/>
+                        <outlet property="pickerView" destination="spY-yV-gHC" id="fDG-rD-NuG"/>
+                        <outlet property="roundsLabel" destination="fkL-J8-Dhw" id="TZL-IE-XMk"/>
+                        <outlet property="stepsLabel" destination="JcT-dq-dHY" id="QLr-Al-F5k"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="136.80000000000001" y="133.5832083958021"/>
         </scene>
     </scenes>
 </document>

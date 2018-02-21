@@ -1,5 +1,5 @@
 //
-//  VoiceSpeaker.swift
+//  Speaker.swift
 //  StepTester
 //
 //  Created by Jay Tucker on 2/20/18.
@@ -9,16 +9,12 @@
 import Foundation
 import AVFoundation
 
-protocol Speaker {
-    func speak(_ message: String)
-}
-
-struct VoiceSpeaker: Speaker {
+struct Speaker {
     
     private let synthesizer = AVSpeechSynthesizer()
 
      func speak(_ message: String) {
-        print(message)
+        Logger.sharedInstance.log(message)
         let utterance = AVSpeechUtterance(string: message)
         // utterance.voice = AVSpeechSynthesisVoice(language: "en-AU")
         synthesizer.pauseSpeaking(at: .word)
