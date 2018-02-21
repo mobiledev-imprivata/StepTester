@@ -119,8 +119,11 @@
                     </view>
                     <connections>
                         <outlet property="currentRoundLabel" destination="nqR-XJ-2zu" id="01N-ub-dwH"/>
+                        <outlet property="deleteButton" destination="F8P-ud-GDR" id="7sv-GV-LBY"/>
                         <outlet property="pickerView" destination="spY-yV-gHC" id="fDG-rD-NuG"/>
                         <outlet property="roundsLabel" destination="fkL-J8-Dhw" id="TZL-IE-XMk"/>
+                        <outlet property="sendButton" destination="PjP-YN-9rV" id="xJy-nF-ikp"/>
+                        <outlet property="startButton" destination="xZF-FM-fk7" id="laI-PJ-ayy"/>
                         <outlet property="stepsLabel" destination="JcT-dq-dHY" id="QLr-Al-F5k"/>
                     </connections>
                 </viewController>

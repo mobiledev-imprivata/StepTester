@@ -13,6 +13,9 @@ class ViewController: UIViewController {
     @IBOutlet weak var stepsLabel: UILabel!
     @IBOutlet weak var roundsLabel: UILabel!
     @IBOutlet weak var currentRoundLabel: UILabel!
+    @IBOutlet weak var startButton: UIButton!
+    @IBOutlet weak var deleteButton: UIButton!
+    @IBOutlet weak var sendButton: UIButton!
     
     private var testRunner = TestRunner()
 
@@ -79,11 +82,17 @@ extension ViewController: TestRunnerDelegate {
     func didStart() {
         Logger.sharedInstance.log("didStart")
         currentRoundLabel.text = "0"
+        startButton.isEnabled = false
+        deleteButton.isEnabled = false
+        sendButton.isEnabled = false
     }
     
     func didFinish() {
         Logger.sharedInstance.log("didFinish")
         currentRoundLabel.text = "0"
+        startButton.isEnabled = true
+        deleteButton.isEnabled = true
+        sendButton.isEnabled = true
     }
     
     func updateRound(_ round: Int) {
