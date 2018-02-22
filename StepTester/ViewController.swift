@@ -23,20 +23,27 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
+        testRunner.speaker = Speaker()
+        testRunner.delegate = self
+        
         pickerView.dataSource = self
         pickerView.delegate = self
 
-        stepsLabel.text = "\(testRunner.nSteps)"
-        roundsLabel.text = "\(testRunner.nRounds)"
         currentRoundLabel.text = "0"
         
-        testRunner.speaker = Speaker()
-        testRunner.delegate = self
+        updateFromUserDefaults()
+        NotificationCenter.default.addObserver(self, selector: #selector(updateFromUserDefaults), name: UserDefaults.didChangeNotification, object: nil)
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    @objc private func updateFromUserDefaults() {
+        testRunner.updateFromUserDefaults()
+        stepsLabel.text = "\(testRunner.nSteps)"
+        roundsLabel.text = "\(testRunner.nRounds)"
     }
     
     @IBAction func startTest(_ sender: Any) {

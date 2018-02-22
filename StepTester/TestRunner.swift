@@ -24,11 +24,12 @@ final class TestRunner {
         "looking at phone"
     ]
     
-    let nSteps = 7
-    let nRounds = 3
-    let testDuration: TimeInterval = 5
-    let pauseDuration: TimeInterval = 3
-
+    private(set) var nSteps: Int = 7
+    private(set) var nRounds: Int = 3
+    private(set) var roundDuration: TimeInterval = 10
+    
+    private let pauseDuration: TimeInterval = 3
+    
     var speaker: Speaker? {
         didSet {
             speaker?.delegate = self
@@ -37,7 +38,13 @@ final class TestRunner {
     var delegate: TestRunnerDelegate?
     
     private var currentRound = 0
-
+    
+    func updateFromUserDefaults() {
+        nSteps = UserDefaults.standard.integer(forKey: "number_of_steps")
+        nRounds = UserDefaults.standard.integer(forKey: "number_of_rounds")
+        roundDuration = UserDefaults.standard.double(forKey: "duration_of_round")
+    }
+    
     func start() {
         delegate?.didStart()
         currentRound = 0
@@ -87,7 +94,7 @@ extension TestRunner: SpeakerDelegate {
         } else if text.starts(with: "set") {
             speaker?.speak("go", delay: 0.5)
         } else if text.starts(with: "go") {
-            DispatchQueue.main.asyncAfter(deadline: .now() + testDuration) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + roundDuration) {
                 self.endRound()
             }
         }
