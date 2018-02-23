@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import UserNotifications
+
 class ViewController: UIViewController {
     
     @IBOutlet weak var pickerView: UIPickerView!
@@ -31,7 +33,11 @@ class ViewController: UIViewController {
         currentRoundLabel.text = "0"
         
         updateFromUserDefaults()
+        
         NotificationCenter.default.addObserver(self, selector: #selector(updateFromUserDefaults), name: UserDefaults.didChangeNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(displayLoggerInfo(_:)), name: NSNotification.Name(rawValue: loggerInfoNotification), object: nil)
+
+        requestAuthorizationForNotifications()
     }
 
     override func didReceiveMemoryWarning() {
@@ -39,10 +45,43 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    private func requestAuthorizationForNotifications() {
+        let options: UNAuthorizationOptions = [.alert]
+        UNUserNotificationCenter.current().requestAuthorization(options: options) {
+            (granted, error) in
+            if !granted {
+                Logger.sharedInstance.log("authorization for notifications not granted")
+            } else {
+                UNUserNotificationCenter.current().delegate = self
+            }
+        }
+    }
+    
     @objc private func updateFromUserDefaults() {
         testRunner.updateFromUserDefaults()
         stepsLabel.text = "\(testRunner.nSteps)"
         roundsLabel.text = "\(testRunner.nRounds)"
+    }
+    
+    @objc private func displayLoggerInfo(_ notification: Notification) {
+        guard let userInfo = notification.userInfo else { return }
+        guard let title = userInfo["title"] as? String else { return }
+        guard let body = userInfo["body"] as? String else { return }
+        
+        let content = UNMutableNotificationContent()
+        content.title = title
+        content.body = body
+        
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 1, repeats: false)
+        
+        let request = UNNotificationRequest(identifier: "mynotification", content: content, trigger: trigger)
+        
+        UNUserNotificationCenter.current().add(request) {
+            error in
+            if let error = error {
+                Logger.sharedInstance.log("error scheduling local notification \(error.localizedDescription)")
+            }
+        }
     }
     
     @IBAction func startTest(_ sender: Any) {
@@ -79,6 +118,12 @@ extension ViewController: UIPickerViewDelegate {
     
 }
 
+extension ViewController: UNUserNotificationCenterDelegate {
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        completionHandler([.alert])
+    }
+}
+
 extension ViewController: TestRunnerDelegate {
     
     func didStart() {
@@ -105,7 +150,6 @@ extension ViewController: TestRunnerDelegate {
     func selectedLocation() -> Int {
         return pickerView.selectedRow(inComponent: 0)
     }
-
     
 }
 

@@ -8,6 +8,8 @@
 
 import Foundation
 
+let loggerInfoNotification = "com.imprivata.loggerInfo"
+
 public final class Logger {
     
     // singleton
@@ -67,6 +69,7 @@ public final class Logger {
             self.closeFile()
             self.deleteFile()
             self.messageBuffer.removeAll(keepingCapacity: true)
+            self.displayInfoNotification(title: "Success", body:"Data deleted.")
         }
     }
     
@@ -143,6 +146,8 @@ public final class Logger {
         
         print("content character count: \(contentString.count)")
         
+        let nEntries = contentString.components(separatedBy: "\\n").filter { !$0.isEmpty }.count
+        
         let jsonString = "{ \"text\": \"\(contentString)\" }"
         
         guard let jsonData = jsonString.data(using: .utf8) else {
@@ -165,11 +170,13 @@ public final class Logger {
             let task = URLSession.shared.dataTask(with: request as URLRequest) { data, response, error in
                 guard error == nil else {
                     print("error: \(error!.localizedDescription)")
+                    self.displayInfoNotification(title: "Failure", body: error!.localizedDescription)
                     return
                 }
                 
                 guard let response = response as? HTTPURLResponse else {
                     print("got bad response")
+                    self.displayInfoNotification(title: "Failure", body:"got bad response")
                     return
                 }
                 
@@ -177,10 +184,18 @@ public final class Logger {
                 if response.statusCode == 200 {
                     self.deleteFile()
                     self.messageBuffer.removeAll(keepingCapacity: true)
+                    self.displayInfoNotification(title: "Success", body:"Uploaded \(nEntries) results")
+                } else {
+                    self.displayInfoNotification(title: "Failure", body:"got response status \(response.statusCode)")
                 }
             }
             task.resume()
         }
     }
     
+    private func displayInfoNotification(title: String, body: String) {
+        let userInfo = ["title": title, "body": body]
+        NotificationCenter.default.post(name: Notification.Name(rawValue: loggerInfoNotification), object: self, userInfo: userInfo)
+    }
+
 }
