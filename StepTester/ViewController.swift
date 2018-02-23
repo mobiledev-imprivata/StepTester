@@ -17,13 +17,12 @@ class ViewController: UIViewController {
     @IBOutlet weak var deleteButton: UIButton!
     @IBOutlet weak var sendButton: UIButton!
     
-    private var testRunner = TestRunner()
+    private let testRunner = TestRunner()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        testRunner.speaker = Speaker()
         testRunner.delegate = self
         
         pickerView.dataSource = self
@@ -75,10 +74,6 @@ extension ViewController: UIPickerViewDataSource {
 extension ViewController: UIPickerViewDelegate {
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-//        let numberFormatter = NumberFormatter()
-//        numberFormatter.numberStyle = .spellOut
-//        return numberFormatter.string(for: row + 1)?.capitalized
-        
         return testRunner.locations[row].capitalized
     }
     

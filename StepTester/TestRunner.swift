@@ -30,11 +30,14 @@ final class TestRunner {
     
     private let pauseDuration: TimeInterval = 3
     
-    var speaker: Speaker? {
-        didSet {
-            speaker?.delegate = self
-        }
-    }
+    private let pedometerManager = PedometerManager()
+    
+    private lazy var speaker: Speaker = {
+        let s = Speaker()
+        s.delegate = self
+        return s
+    }()
+    
     var delegate: TestRunnerDelegate?
     
     private var currentRound = 0
@@ -43,6 +46,8 @@ final class TestRunner {
         nSteps = UserDefaults.standard.integer(forKey: "number_of_steps")
         nRounds = UserDefaults.standard.integer(forKey: "number_of_rounds")
         roundDuration = UserDefaults.standard.double(forKey: "duration_of_round")
+        
+        pedometerManager.interval = roundDuration
     }
     
     func start() {
@@ -55,25 +60,34 @@ final class TestRunner {
         } else {
             message = "put your phone in your \(locations[selectedLocation])"
         }
-        speaker?.speak(message)
+        speaker.speak(message)
     }
     
     private func startRound() {
         currentRound += 1
-        speaker?.speak("round \(currentRound), take \(nSteps) steps", delay: pauseDuration)
+        speaker.speak("round \(currentRound), take \(nSteps) steps", delay: pauseDuration)
     }
     
     private func endRound() {
+        pedometerManager.queryData { dataString in
+            DispatchQueue.main.async {
+                self.processPedometerData(pedometerData: dataString)
+            }
+        }
+    }
+    
+    // must be called on main queue because selectedLocationIndex is determined from UIPickerView selection
+    private func processPedometerData(pedometerData: String) {
         let dt = DateFormatter()
         dt.dateFormat = "yyyyMMdd'T'HH-mm-ss"
         let dateString = dt.string(from: Date())
         let selectedLocationIndex = delegate?.selectedLocation() ?? 0
-        let message = "\(dateString),\(locations[selectedLocationIndex]),\(currentRound),\(nRounds),\(nSteps),n"
+        let message = "\(dateString),\(locations[selectedLocationIndex]),\(currentRound),\(nRounds),\(nSteps),\(pedometerData)"
         Logger.sharedInstance.log(message, toFile: true)
         if currentRound < nRounds {
-            speaker?.speak("stop")
+            speaker.speak("stop")
         } else {
-            speaker?.speak("done with all rounds")
+            speaker.speak("done with all rounds")
             delegate?.didFinish()
         }
     }
@@ -88,11 +102,11 @@ extension TestRunner: SpeakerDelegate {
             startRound()
         } else if text.starts(with: "round") {
             delegate?.updateRound(currentRound)
-            speaker?.speak("ready", delay: 0.5)
+            speaker.speak("ready", delay: 0.5)
         } else if text.starts(with: "ready") {
-            speaker?.speak("set", delay: 0.5)
+            speaker.speak("set", delay: 0.5)
         } else if text.starts(with: "set") {
-            speaker?.speak("go", delay: 0.5)
+            speaker.speak("go", delay: 0.5)
         } else if text.starts(with: "go") {
             DispatchQueue.main.asyncAfter(deadline: .now() + roundDuration) {
                 self.endRound()

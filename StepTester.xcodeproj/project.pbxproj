@@ -16,6 +16,7 @@
 		D6CDDD1B203C7ED9001DF3CD /* Speaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6CDDD1A203C7ED9001DF3CD /* Speaker.swift */; };
 		D6CDDD1D203C8007001DF3CD /* TestRunner.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6CDDD1C203C8007001DF3CD /* TestRunner.swift */; };
 		D6CF5979203E331D00D15325 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = D6CF5978203E331D00D15325 /* Settings.bundle */; };
+		D6E227EA204065E000B6D53C /* PedometerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6E227E9204065E000B6D53C /* PedometerManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		D6CDDD1A203C7ED9001DF3CD /* Speaker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Speaker.swift; sourceTree = "<group>"; };
 		D6CDDD1C203C8007001DF3CD /* TestRunner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestRunner.swift; sourceTree = "<group>"; };
 		D6CF5978203E331D00D15325 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
+		D6E227E9204065E000B6D53C /* PedometerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PedometerManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,8 +67,9 @@
 				D67DC7FC203C84A200AF0CCD /* Logger.swift */,
 				D62E5128203780790099FEDA /* AppDelegate.swift */,
 				D62E512A203780790099FEDA /* ViewController.swift */,
-				D6CDDD1A203C7ED9001DF3CD /* Speaker.swift */,
 				D6CDDD1C203C8007001DF3CD /* TestRunner.swift */,
+				D6CDDD1A203C7ED9001DF3CD /* Speaker.swift */,
+				D6E227E9204065E000B6D53C /* PedometerManager.swift */,
 				D62E512C203780790099FEDA /* Main.storyboard */,
 				D62E512F203780790099FEDA /* Assets.xcassets */,
 				D62E5131203780790099FEDA /* LaunchScreen.storyboard */,
@@ -152,6 +155,7 @@
 				D67DC7FD203C84A200AF0CCD /* Logger.swift in Sources */,
 				D62E512B203780790099FEDA /* ViewController.swift in Sources */,
 				D6CDDD1D203C8007001DF3CD /* TestRunner.swift in Sources */,
+				D6E227EA204065E000B6D53C /* PedometerManager.swift in Sources */,
 				D62E5129203780790099FEDA /* AppDelegate.swift in Sources */,
 				D6CDDD1B203C7ED9001DF3CD /* Speaker.swift in Sources */,
 			);
