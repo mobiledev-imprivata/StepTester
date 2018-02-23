@@ -30,7 +30,8 @@ final class Speaker: NSObject {
         Logger.sharedInstance.log(message)
         let utterance = AVSpeechUtterance(string: message)
         utterance.preUtteranceDelay = delay
-        // utterance.voice = AVSpeechSynthesisVoice(language: "en-AU")
+        let language = UserDefaults.standard.string(forKey: "voice")
+        utterance.voice = AVSpeechSynthesisVoice(language: language)
         synthesizer.speak(utterance)
     }
 
