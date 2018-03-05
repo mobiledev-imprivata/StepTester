@@ -65,7 +65,7 @@ final class TestRunner {
     
     private func startRound() {
         currentRound += 1
-        speaker.speak("round \(currentRound), take \(nSteps) steps", delay: pauseDuration)
+        speaker.speak("Round \(currentRound). When you hear the word Go, take \(nSteps) steps", delay: pauseDuration)
     }
     
     private func endRound() {
@@ -100,13 +100,13 @@ extension TestRunner: SpeakerDelegate {
         Logger.sharedInstance.log("didFinish saying \(text)")
         if text.contains("phone") || text.starts(with: "stop") {
             startRound()
-        } else if text.starts(with: "round") {
+        } else if text.starts(with: "Round") {
             delegate?.updateRound(currentRound)
-            speaker.speak("ready", delay: 0.5)
+            speaker.speak("ready", delay: 0.25)
         } else if text.starts(with: "ready") {
-            speaker.speak("set", delay: 0.5)
+            speaker.speak("set", delay: 0.25)
         } else if text.starts(with: "set") {
-            speaker.speak("go", delay: 0.5)
+            speaker.speak("go", delay: 0.25)
         } else if text.starts(with: "go") {
             DispatchQueue.main.asyncAfter(deadline: .now() + roundDuration) {
                 self.endRound()
