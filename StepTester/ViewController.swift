@@ -33,6 +33,7 @@ class ViewController: UIViewController {
         currentRoundLabel.text = "0"
         
         updateFromUserDefaults()
+        updateAfterNotification(isSuccess: true)
         
         NotificationCenter.default.addObserver(self, selector: #selector(updateFromUserDefaults), name: UserDefaults.didChangeNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(displayLoggerInfo(_:)), name: NSNotification.Name(rawValue: loggerInfoNotification), object: nil)
@@ -68,6 +69,10 @@ class ViewController: UIViewController {
         guard let title = userInfo["title"] as? String else { return }
         guard let body = userInfo["body"] as? String else { return }
         
+        DispatchQueue.main.async {
+            self.updateAfterNotification(isSuccess: title == "Success")
+        }
+        
         let content = UNMutableNotificationContent()
         content.title = title
         content.body = body
@@ -94,6 +99,12 @@ class ViewController: UIViewController {
     
     @IBAction func sendData(_ sender: Any) {
         Logger.sharedInstance.upload()
+    }
+    
+    private func updateAfterNotification(isSuccess: Bool) {
+        startButton.isEnabled = isSuccess
+        deleteButton.isEnabled = !isSuccess
+        sendButton.isEnabled = !isSuccess
     }
     
 }
@@ -137,7 +148,7 @@ extension ViewController: TestRunnerDelegate {
     func didFinish() {
         Logger.sharedInstance.log("didFinish")
         currentRoundLabel.text = "0"
-        startButton.isEnabled = true
+        // startButton.isEnabled = true
         deleteButton.isEnabled = true
         sendButton.isEnabled = true
     }

@@ -186,7 +186,7 @@ public final class Logger {
                     self.messageBuffer.removeAll(keepingCapacity: true)
                     self.displayInfoNotification(title: "Success", body:"Uploaded \(nEntries) results")
                 } else {
-                    self.displayInfoNotification(title: "Failure", body:"got response status \(response.statusCode)")
+                    self.displayInfoNotification(title: "Failure", body:"Got response status \(response.statusCode)")
                 }
             }
             task.resume()

@@ -102,7 +102,7 @@ extension TestRunner: SpeakerDelegate {
             startRound()
         } else if text.starts(with: "Round") {
             delegate?.updateRound(currentRound)
-            speaker.speak("ready", delay: 0.25)
+            speaker.speak("ready", delay: 0.5)
         } else if text.starts(with: "ready") {
             speaker.speak("set", delay: 0.25)
         } else if text.starts(with: "set") {
