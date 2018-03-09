@@ -82,7 +82,7 @@ final class TestRunner {
         dt.dateFormat = "yyyyMMdd'T'HH-mm-ss"
         let dateString = dt.string(from: Date())
         let selectedLocationIndex = delegate?.selectedLocation() ?? 0
-        let message = "\(dateString),\(locations[selectedLocationIndex]),\(currentRound),\(nRounds),\(nSteps),\(pedometerData)"
+        let message = "\(dateString),\(Device.modelName),\(locations[selectedLocationIndex]),\(currentRound),\(nRounds),\(nSteps),\(pedometerData)"
         Logger.sharedInstance.log(message, toFile: true)
         if currentRound < nRounds {
             speaker.speak("stop")
